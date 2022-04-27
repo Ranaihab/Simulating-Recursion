@@ -1,0 +1,12 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+E:/University/College/Grade 3/Spring 2022/Concepts of Programming Language/Assignments/Simulating-Recursion/main.cpp
+iostream
+-
+
