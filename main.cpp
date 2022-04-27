@@ -88,7 +88,8 @@ int F(int n)
     return Return;
 }
 
-int main() {
+int main()
+{
     // Test Cases
     cout << F(1) << endl;  // 1
     cout << F(2) << endl;  // 6
