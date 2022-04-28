@@ -33,7 +33,7 @@ int F(int n)
         call = s.top(); // get the part at the top of the stack so it would be processed
         s.pop();        // remove what is on the top of the stack as it will be processed during this iteration
 
-        if (call.type == RETURN) // in this part we will calculate the value of d and the return value
+        if (call.type == RETURN) // calculate the value of d and the return value
         {
             int d = Return; // d = F(c), and F(c) is the return value from the previous executed part
             Return = call.a + call.n + d; // return a+b+d; b = call.n, a = call.a
@@ -42,21 +42,21 @@ int F(int n)
         if (call.type == Af) // execute the part which will compute a and the function call F(n/2), F(n/2) would be executed outside the if condition hence no continue;
         {
             int a = call.n + Return; // a = n + F(n-1), Return = F(n-1) (assigned from previous iteration), call.n + Return;
-            s.top().a = a;           // since when initializing the part which is type BCf we did not have the value of a back then, we would assign the value of a to it now, BCf is the part at the top of the stack
+            s.top().a = a;           // update a of the previous call(BCf)
         }
         else if (call.type == BCf)  // execute the part which will compute b, c and the function call F(c), F(c) would be executed outside the if condition hence no continue;
         {
             int b = call.n * Return;    // b = n * F(n/2), Return = F(n/2) (assigned from previous iteration), call.n * Return;
             int c = call.n - 2 - (call.a + b) % 2; // c = n - 2 - (a+b)%2
-            s.top().a = call.a;     // since when initializing the call of RETURN we did not have the value of a back then, we would assign the value of a to it now, RETURN is the call at the top of the stack
-            s.top().n = b;  // since when initializing the call of RETURN we did not have the value of b back then, we would assign the value of b to it now, RETURN is the call at the top of the stack
-            call.arg = c;   // when initializing this call we didn't have the value of arg which is c so we assign it here
+            s.top().a = call.a;     // update a of the previous call(RETURN)
+            s.top().n = b;          // update b of the previous call(RETURN)
+            call.arg = c;           // update arg of this call
         }
         // compute calls to the Function F. f, Af, BCf will all compute this part
-        if (call.arg <= 1) // base case of F
+        if (call.arg <= 1)  // base case of F
         {
-            Return = 1; // assign the return value
-            continue;  // return from the function
+            Return = 1;     // assign the return value
+            continue;       // return from the function
         }
         // F(n-1)
         FCall f1;
