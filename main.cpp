@@ -2,10 +2,20 @@
 #include<stack>
 using namespace std;
 /**
- * 11422019479019
+ * Rana Ihab Ahmed      20190207
+ * Amal Mohamed         11422019479019
  */
 
-
+// Original Recursive Function
+int F(int n)
+{
+    if(n<=1) return 1;
+    int a=n+F(n-1);
+    int b=n*F(n/2);
+    int c=n-2-(a+b)%2;
+    int d=F(c);
+    return a+b+d;
+}
 
 // The function would be divided into 4 parts that's why we have 4 call types
 enum CallType {f, Af, BCf, RETURN};
@@ -19,7 +29,8 @@ struct FCall
     int a;          // value of a which will be used in BCf to compute c and in RETURN to compute the return value
 };
 
-int F(int n)
+// Non Recursive Function
+int iterativeF(int n)
 {
     int Return;     // will hold the return value after each call of function
     FCall call;     // encapsulate the whole subprogram
@@ -42,14 +53,14 @@ int F(int n)
         if (call.type == Af) // execute the part which will compute a and the function call F(n/2), F(n/2) would be executed outside the if condition hence no continue;
         {
             int a = call.n + Return; // a = n + F(n-1), Return = F(n-1) (assigned from previous iteration), call.n + Return;
-            s.top().a = a;           // update a of the previous call(BCf)
+            s.top().a = a;           // update a of the next call(BCf)
         }
         else if (call.type == BCf)  // execute the part which will compute b, c and the function call F(c), F(c) would be executed outside the if condition hence no continue;
         {
             int b = call.n * Return;    // b = n * F(n/2), Return = F(n/2) (assigned from previous iteration), call.n * Return;
             int c = call.n - 2 - (call.a + b) % 2; // c = n - 2 - (a+b)%2
-            s.top().a = call.a;     // update a of the previous call(RETURN)
-            s.top().n = b;          // update b of the previous call(RETURN)
+            s.top().a = call.a;     // update a of the next call(RETURN)
+            s.top().n = b;          // update b of the next call(RETURN)
             call.arg = c;           // update arg of this call
         }
         // compute calls to the Function F. f, Af, BCf will all compute this part
@@ -90,26 +101,8 @@ int F(int n)
 
 int main()
 {
-    // Test Cases
-    cout << F(1) << endl;  // 1
-    cout << F(2) << endl;  // 6
-    cout << F(3) << endl;  // 13
-    cout << F(4) << endl;  // 42
-    cout << F(5) << endl;  // 83
-    cout << F(6) << endl;  // 180
-    cout << F(7) << endl;  // 361
-    cout << F(8) << endl;  // 788
-    cout << F(9) << endl;  // 1355
-    cout << F(10) << endl; // 2556
-    cout << F(11) << endl; // 4835
-    cout << F(12) << endl; // 8362
-    cout << F(13) << endl; // 13271
-    cout << F(14) << endl; // 23174
-    cout << F(15) << endl; // 41875
-    cout << F(16) << endl; // 67770
-    cout << F(17) << endl; // 104357
-    cout << F(18) << endl; // 170640
-    cout << F(19) << endl; // 300761
-    cout << F(20) << endl; // 456258
+    // Test Cases, from 1 to 20
+    for(int i = 1; i < 21; i++)
+        cout << "F(" << i << "): " << F(i) << ", iterativeF(" << i << "): " << iterativeF(i) << endl; // print values of recursive and iterative calls of function
     return 0;
 }
