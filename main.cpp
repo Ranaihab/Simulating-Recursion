@@ -9,18 +9,18 @@ using namespace std;
 // Original Recursive Function
 int F(int n)
 {
-    if(n<=1) return 1;
-    int a=n+F(n-1);
-    int b=n*F(n/2);
-    int c=n-2-(a+b)%2;
-    int d=F(c);
-    return a+b+d;
+    if(n <= 1) return 1;
+    int a = n + F(n - 1);
+    int b = n * F(n / 2);
+    int c = n - 2 - (a + b) % 2;
+    int d = F(c);
+    return a + b + d;
 }
 
 // The function would be divided into 4 parts that's why we have 4 call types
 enum CallType {f, Af, BCf, RETURN};
 
-// Struct to encapsulate the function call of the function f
+// Struct to encapsulate the function call of the function F
 struct FCall
 {
     CallType type;  // to decide which part we are doing now
